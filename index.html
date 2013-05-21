@@ -6,17 +6,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <title>Mobile Quiz : Learning Style</title>
-  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+  <link rel="stylesheet" href="http://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
   
   <!-- Extra Codiqa features -->
   <link rel="stylesheet" href="custom.ext.css">
   
   <!-- jQuery and jQuery Mobile -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
-  <script src="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+  <script src="http://d10ajoocuyu32n.cloudfront.net/jquery-1.9.1.min.js"></script>
+  <script src="http://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 
   <!-- Extra Codiqa features -->
-  <script src="https://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
+  <script src="http://d10ajoocuyu32n.cloudfront.net/codiqa.ext.js"></script>
   <script src="learning-styles.js"></script>
   
 </head>
@@ -44,19 +44,19 @@
         <h5>
             Rate between 0 (never) and 10 (always).
         </h5>
-        <form action="">
+        <form action="" data-ajax="true">
             <div data-role="fieldcontain" class="qslider pref">
                 <label for="slider2" class="broad tmpl">
                     I prefer {{prefer}} when learning:
                 </label><br/>
-                <input id="slider2" type="range" name="slider2" value="5" min="0" max="10"
+                <input id="slider2" type="range" name="slider2" value="3" min="1" max="5"
                 data-highlight="true">
             </div>
             <div data-role="fieldcontain" class="qslider liker">
                 <label for="slider3" class="broad tmpl">
                     I like {{like}}:
                 </label><br/>
-                <input id="slider3" type="range" name="slider3" value="5" min="0" max="10"
+                <input id="slider3" type="range" name="slider3" value="3" min="1" max="5"
                 data-highlight="true">
             </div>
             <input type="submit" data-theme="b" data-icon="arrow-r" data-iconpos="right"

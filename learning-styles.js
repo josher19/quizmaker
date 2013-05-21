@@ -24,8 +24,8 @@ Solitary: {prefer: "to be alone", like: "self-study"}
 # TODO:
 ## Quizer
 - function makeTemplate(tmpl, data) { $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); }
-- getScores(tmpl)
-- getStyles(LearningStyle) : for (var s in LearningStyles) if (LearningStyles.hasOwnProperty(s)) data = LearningStyles[s]
+- getScores(form)
+- getData(LearningStyle) : for (var s in LearningStyles) if (LearningStyles.hasOwnProperty(s)) data = LearningStyles[s]
 
 ## Scorer
 - addScore(value, lstyle)
