@@ -24,17 +24,17 @@
 <!-- Home -->
 <div data-role="page" id="page1">
     <div data-theme="a" data-role="header">
-        <a data-role="button" data-inline="true" href="#page1" data-icon="arrow-r"
-        data-iconpos="right" class="ui-btn-right">
-            Next
-        </a>
-        <a data-role="button" data-inline="true" data-direction="reverse" data-rel="back"
+        <a data-role="button" data-inline="true" data-direction="reverse" 
         data-transition="flow" href="#page1" data-icon="arrow-l" data-iconpos="left"
-        class="ui-btn-left">
+        class="ui-btn-left prevBtn">
             Back
         </a>
-        <h3 class="qhead">
-            Question #
+        <a data-role="button" data-inline="true" href="#page1" data-icon="arrow-r"
+        data-iconpos="right" class="ui-btn-right nextBtn">
+            Next
+        </a>
+        <h3 class="qhead tmpl">
+            Question #{{number}}
         </h3>
     </div>
     <div data-role="content" class="content">
@@ -48,32 +48,44 @@
             <div data-role="fieldcontain" class="qslider pref">
                 <label for="slider2" class="broad tmpl">
                     I prefer {{prefer}} when learning:
-                </label><br/>
+                </label>
                 <input id="slider2" type="range" name="slider2" value="3" min="1" max="5"
                 data-highlight="true">
             </div>
             <div data-role="fieldcontain" class="qslider liker">
                 <label for="slider3" class="broad tmpl">
                     I like {{like}}:
-                </label><br/>
+                </label>
                 <input id="slider3" type="range" name="slider3" value="3" min="1" max="5"
                 data-highlight="true">
             </div>
-            <input type="submit" data-theme="b" data-icon="arrow-r" data-iconpos="right"
-            value="Next" data-mini="true">
+            <a class="nextBtn" data-role="button" href="#page1" data-theme="b" data-icon="arrow-r" data-iconpos="right" data-mini="true">
+				Next
+			</a>
+			<!--
+            <input type="button" data-theme="b" data-icon="arrow-r" data-iconpos="right"
+            value="Next" data-mini="true"> -->
         </form>
     </div>
 </div>
-<!-- Home -->
+<!-- Results -->
 <div data-role="page" id="page2">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Results
+        </h3>
+    </div>
     <div data-role="content">
-        <form action="">
+        <h4>
+            Your Learning Styles
+        </h4>
+        <form action="" data-ajax="false">
             <div data-role="fieldcontain" class="slider">
-                <label for="slider1">
-                    Value
+                <label for="{{question}}_id">
+                    {{question}}:
                 </label>
-                <input id="slider1" type="range" name="slider1" value="50" min="0" max="100"
-                data-highlight="true">
+                <input id="{{question}}_id" type="range" name="slider" value="6" min="0"
+                max="10" data-highlight="true" data-theme="d" data-track-theme="d" data-mini="true">
             </div>
         </form>
     </div>

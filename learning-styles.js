@@ -12,12 +12,12 @@ Solitary: The solitary learner prefers to learn alone and through self-study.
 
 LearningStyles = {
 Visual: {prefer: "to use pictures, colors, and images", like: "mind maps and diagrams" },
-Physical: {prefer: "to use my body and physical objects, drawing diagrams, or role playing", like: "to learn by doing"},
 Aural: {prefer: "using sound, rhythms, music, or recordings", like: "to use clever rhymes to help memorize things"},
 Verbal: {prefer: "using words, both in speech and in writing", like: "word based techniques, scripting, and reading content aloud to help study and learn" },
+Physical: {prefer: "to use my body and physical objects, drawing diagrams, or role playing", like: "to learn by doing"},
 Logical: {prefer: 'using logic, reasoning, and "systems"', like: 'to "get the big picture" and understand the reasons behind the learning'},
-Social: {prefer: "to work in groups or with other people", like: "to work with others as much as possible"},
-Solitary: {prefer: "to be alone", like: "self-study"}
+Solitary: {prefer: "to be alone", like: "self-study"},
+Social: {prefer: "to work in groups or with other people", like: "to work with others as much as possible"}
 }
 
 /**
@@ -31,3 +31,37 @@ Solitary: {prefer: "to be alone", like: "self-study"}
 - addScore(value, lstyle)
 - getFinalScores(LearningStyles)
 */
+
+
+/* Questions */
+
+// TODO: Add closure
+function getQuestions(LearningStyles) { var questions=[]; for (var q in LearningStyles) if (LearningStyles.hasOwnProperty(q) && typeof LearningStyles[q] === "object" &&  LearningStyles[q]) { LearningStyles[q].number = LearningStyles[q].number || questions.push(q); } return questions; }
+var questions = getQuestions(LearningStyles), nextq=0;
+
+function getNextQuestion() { return LearningStyles[questions[nextq++]] }
+function getCurrentQuestion() { return LearningStyles[questions[nextq]] }
+function resetQuestions() { nextq = 0; }
+function prevQuestion() { return --nextq; }
+
+//~ function log(msg) { if (typeof console !== "undefined") console.log(msg); }
+var log = typeof console === "undefined" ? function() { }  : console.log.bind(console);
+function nextPage() { log('nextPage') } // TODO
+function savedata() { } // TODO
+function calculateScore() { log('calculateScore')} // TODO
+
+/* Templates */
+
+function updateTitle() { document.title = $('.qhead').text().trim(); }
+function makeTemplate(data, tmpl) { if (!data) return false; $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); updateTitle(); return true; }
+
+function nextTemplate() { savedata(); return makeTemplate(getNextQuestion()) || nextPage(); }
+function prevTemplate() { return prevQuestion() >= 0 ? makeTemplate(getCurrentQuestion()) : resetQuestions(); }
+
+var startup = function ($) { 
+	nextTemplate();
+	$('.nextBtn').tap(nextTemplate);
+	$('.prevBtn').tap(prevTemplate);
+	$(document.body).swiperight(nextTemplate).swipeleft(prevTemplate);
+};
+jQuery(startup);
