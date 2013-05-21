@@ -20,3 +20,13 @@ Social: {prefer: "to work in groups or with other people", like: "work with othe
 Solitary: {prefer: "to be alone", like: "self-study"}
 }
 
+/**
+# TODO:
+## Quizer
+- makeTemplate(tmpl, data)
+- getScores(tmpl)
+
+## Scorer
+- addScore(value, lstyle)
+- getFinalScores(LearningStyles)
+*/
