@@ -16,15 +16,16 @@ Physical: {prefer: "to use my body and physical objects, drawing diagrams, or ro
 Aural: {prefer: "using sound, rhythms, music, or recordings", like: "to use clever rhymes to help memorize things"},
 Verbal: {prefer: "using words, both in speech and in writing", like: "word based techniques, scripting, and reading content aloud to help study and learn" },
 Logical: {prefer: 'using logic, reasoning, and "systems"', like: 'to "get the big picture" and understand the reasons behind the learning'},
-Social: {prefer: "to work in groups or with other people", like: "work with others as much as possible."},
+Social: {prefer: "to work in groups or with other people", like: "to work with others as much as possible"},
 Solitary: {prefer: "to be alone", like: "self-study"}
 }
 
 /**
 # TODO:
 ## Quizer
-- makeTemplate(tmpl, data)
+- function makeTemplate(tmpl, data) { $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); }
 - getScores(tmpl)
+- getStyles(LearningStyle) : for (var s in LearningStyles) if (LearningStyles.hasOwnProperty(s)) data = LearningStyles[s]
 
 ## Scorer
 - addScore(value, lstyle)
