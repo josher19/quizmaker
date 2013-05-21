@@ -1,0 +1,43 @@
+<!-- Home -->
+<div data-role="page" id="page1">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" data-inline="true" href="#page1" data-icon="arrow-r"
+        data-iconpos="right" class="ui-btn-right">
+            Next
+        </a>
+        <a data-role="button" data-inline="true" data-direction="reverse" data-rel="back"
+        data-transition="flow" href="#page1" data-icon="arrow-l" data-iconpos="left"
+        class="ui-btn-left">
+            Back
+        </a>
+        <h3 class="qhead">
+            Question #
+        </h3>
+    </div>
+    <div data-role="content">
+        <h4>
+            Do you agree with these statements?
+        </h4>
+        <h5>
+            Rate between 0 (never) and 10 (always).
+        </h5>
+        <form action="">
+            <div data-role="fieldcontain" class="qslider pref">
+                <label for="slider2">
+                    I prefer ___ when learning:
+                </label>
+                <input id="slider2" type="range" name="slider" value="5" min="0" max="10"
+                data-highlight="false">
+            </div>
+            <div data-role="fieldcontain" class="qslider liker">
+                <label for="slider3">
+                    I like ___:
+                </label>
+                <input id="slider3" type="range" name="slider" value="5" min="0" max="10"
+                data-highlight="false">
+            </div>
+            <input type="submit" data-theme="b" data-icon="arrow-r" data-iconpos="right"
+            value="Next" data-mini="true">
+        </form>
+    </div>
+</div>
