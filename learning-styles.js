@@ -49,6 +49,7 @@ var log = typeof console === "undefined" ? function() { }  : console.log.bind(co
 function nextPage() { log('nextPage') } // TODO
 function savedata() { } // TODO
 function calculateScore() { log('calculateScore')} // TODO
+function setSliderValue(slider, value) { $(slider).val(value).change(); } 
 
 /* Templates */
 
