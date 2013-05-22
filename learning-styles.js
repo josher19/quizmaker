@@ -36,10 +36,17 @@ Social: {prefer: "to work in groups or with other people", like: "to work with o
 /* Questions */
 
 // TODO: Add closure
-function getQuestions(LearningStyles) { var questions=[]; for (var q in LearningStyles) if (LearningStyles.hasOwnProperty(q) && typeof LearningStyles[q] === "object" &&  LearningStyles[q]) { LearningStyles[q].number = LearningStyles[q].number || questions.push(q); } return questions; }
-var questions = getQuestions(LearningStyles), nextq=0;
+function getQuestions(LearningStyles) { 
+    var questions=[]; 
+    for (var q in LearningStyles) if (LearningStyles.hasOwnProperty(q) && typeof LearningStyles[q] === "object" &&  LearningStyles[q]) { 
+        LearningStyles[q].named = q;
+        LearningStyles[q].number = LearningStyles[q].number || questions.push(q); 
+    } 
+    return questions; 
+}
+var questions = getQuestions(LearningStyles), nextq=-1, answers = {};
 
-function getNextQuestion() { return LearningStyles[questions[nextq++]] }
+function getNextQuestion() { return LearningStyles[questions[++nextq]] }
 function getCurrentQuestion() { return LearningStyles[questions[nextq]] }
 function resetQuestions() { nextq = 0; }
 function prevQuestion() { return --nextq; }
@@ -47,22 +54,33 @@ function prevQuestion() { return --nextq; }
 //~ function log(msg) { if (typeof console !== "undefined") console.log(msg); }
 var log = typeof console === "undefined" ? function() { }  : console.log.bind(console);
 function nextPage() { log('nextPage') } // TODO
-function savedata() { } // TODO
+function savedata() { 
+    if (nextq < 0) return false;
+    var prefer = +$('#slider2').val(), like = +$('#slider3').val(), q = getCurrentQuestion(), named = q && q.named, scored = answers || {};
+    if (!named) return false;
+    scored[named] = {prefer: prefer, like:like, score: prefer + like };
+    log(scored);
+    return true;
+} 
 function calculateScore() { log('calculateScore')} // TODO
+
+/* Sliders */
+
 function setSliderValue(slider, value) { $(slider).val(value).change(); } 
+function isSlider(e) { return e && $(e.target).closest(".ui-slider, .ui-slider-track").length; }
 
 /* Templates */
 
 function updateTitle() { document.title = $('.qhead').text().trim(); }
 function makeTemplate(data, tmpl) { if (!data) return false; $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); updateTitle(); return true; }
 
-function nextTemplate() { savedata(); return makeTemplate(getNextQuestion()) || nextPage(); }
+function nextTemplate(ev) { savedata(); if (isSlider(ev)) { return false;} return makeTemplate(getNextQuestion()) || nextPage(); }
 function prevTemplate() { return prevQuestion() >= 0 ? makeTemplate(getCurrentQuestion()) : resetQuestions(); }
 
 var startup = function ($) { 
-	nextTemplate();
-	$('.nextBtn').tap(nextTemplate);
-	$('.prevBtn').tap(prevTemplate);
-	$(document.body).swiperight(nextTemplate).swipeleft(prevTemplate);
+    nextTemplate();
+    $('.nextBtn').tap(nextTemplate);
+    $('.prevBtn').tap(prevTemplate);
+    $('.page > div').swiperight(nextTemplate).swipeleft(prevTemplate);
 };
 jQuery(startup);
