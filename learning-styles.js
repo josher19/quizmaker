@@ -53,29 +53,60 @@ function prevQuestion() { return --nextq; }
 
 //~ function log(msg) { if (typeof console !== "undefined") console.log(msg); }
 var log = typeof console === "undefined" ? function() { }  : console.log.bind(console);
-function nextPage() { log('nextPage') } // TODO
+function nextPage(ev) { 
+    log('nextPage'); 
+    var nextpage = $.mobile.activePage ? $.mobile.activePage.next('div[data-role="page"]') : $('#page2');
+    if (nextpage.length > 0) {
+        $.mobile.changePage(nextpage, {transition: "slide"}, false, true);
+    }    
+    $('#results').html(getFinalScore()); 
+    ev.preventDefault();
+    return true;
+} // TODO
 function savedata() { 
     if (nextq < 0) return false;
     var prefer = +$('#slider2').val(), like = +$('#slider3').val(), q = getCurrentQuestion(), named = q && q.named, scored = answers || {};
     if (!named) return false;
     scored[named] = {prefer: prefer, like:like, score: prefer + like };
-    log(scored);
     return true;
 } 
 function calculateScore() { log('calculateScore')} // TODO
+function getCurrentAnswer() { return answers[questions[nextq]] }
+
+function getFinalScore() {
+    var res = [];
+    for (var q in answers) {
+        var ans = answers[q];
+        var graphic = "<span class=score" + ans.score +">" + (new Array(ans.score).join("#")) + "#</span>";
+        res.push(q + ":  \t" + ans.score + "/10 \t" + graphic);
+    }
+    return res.join("\n");
+}
 
 /* Sliders */
 
-function setSliderValue(slider, value) { $(slider).val(value).change(); } 
 function isSlider(e) { return e && $(e.target).closest(".ui-slider, .ui-slider-track").length; }
+function setSliderValue(slider, value) { $(slider).val(value).change(); } 
+function setSliderFromAnswer(ans) { 
+    var DEFAULT_PREFER_VAL = 3, DEFAULT_LIKE_VAL = 2;
+    ans = ans || getCurrentAnswer() || {};
+    setSliderValue('#slider2', ans.prefer || DEFAULT_PREFER_VAL);
+    setSliderValue('#slider3', ans.like || DEFAULT_LIKE_VAL);
+}
 
 /* Templates */
 
 function updateTitle() { document.title = $('.qhead').text().trim(); }
-function makeTemplate(data, tmpl) { if (!data) return false; $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); updateTitle(); return true; }
+function makeTemplate(data, tmpl) { 
+    if (!data) return false; 
+    $(tmpl || '.tmpl').map(function(n,it) { var t=$(it), txt=t.data('otext'); if (!txt) { t.data('otext',(txt=t.text())); } return t.text(txt.replace(/{{([^}]+)}}/g, function(m,word,posn,text) { return data[word] })) ; }); 
+    updateTitle(); 
+    setSliderFromAnswer();
+    return true; 
+}
 
-function nextTemplate(ev) { savedata(); if (isSlider(ev)) { return false;} return makeTemplate(getNextQuestion()) || nextPage(); }
-function prevTemplate() { return prevQuestion() >= 0 ? makeTemplate(getCurrentQuestion()) : resetQuestions(); }
+function nextTemplate(ev) { savedata(); if (isSlider(ev)) { return false;} return makeTemplate(getNextQuestion()) || nextPage(ev); }
+function prevTemplate(ev) { if (isSlider(ev)) { return false;} return prevQuestion() >= 0 ? makeTemplate(getCurrentQuestion()) : resetQuestions(); }
 
 var startup = function ($) { 
     nextTemplate();

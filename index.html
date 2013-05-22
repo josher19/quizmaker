@@ -42,7 +42,7 @@
             Do you agree with these statements?
         </h4>
         <h5>
-            Rate between 0 (never) and 10 (always).
+            Rate between 0 (never) and 5 (always).
         </h5>
         <form action="" data-ajax="true">
             <div data-role="fieldcontain" class="qslider pref">
@@ -71,23 +71,21 @@
 <!-- Results -->
 <div data-role="page" id="page2">
     <div data-theme="a" data-role="header">
+        <a data-role="button" data-inline="true" data-direction="reverse" 
+		    data-transition="flow" href="#page1" data-icon="arrow-l" data-iconpos="left"
+			class="ui-btn-left prevBtn">
+            Back
+        </a>
         <h3>
             Results
         </h3>
     </div>
     <div data-role="content">
         <h4>
-            Your Learning Styles
+            Your Learning Styles:
         </h4>
-        <form action="" data-ajax="false">
-            <div data-role="fieldcontain" class="slider">
-                <label for="{{question}}_id">
-                    {{question}}:
-                </label>
-                <input id="{{question}}_id" type="range" name="slider" value="6" min="0"
-                max="10" data-highlight="true" data-theme="d" data-track-theme="d" data-mini="true">
-            </div>
-        </form>
+        <pre id="results"></pre>
+
     </div>
 </div>
 </body>
