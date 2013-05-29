@@ -49,14 +49,14 @@
                 <label for="slider2" class="broad tmpl">
                     I prefer {{prefer}} when learning:
                 </label>
-                <input id="slider2" type="range" name="slider2" value="3" min="1" max="5"
+                <input id="slider2" type="range" name="slider2" value="1" min="1" max="5"
                 data-highlight="true">
             </div>
             <div data-role="fieldcontain" class="qslider liker">
                 <label for="slider3" class="broad tmpl">
                     I like {{like}}:
                 </label>
-                <input id="slider3" type="range" name="slider3" value="2" min="1" max="5"
+                <input id="slider3" type="range" name="slider3" value="1" min="1" max="5"
                 data-highlight="true">
             </div>
             <a class="nextBtn" data-role="button" href="#page1" data-theme="b" data-icon="arrow-r" data-iconpos="right" data-mini="true">
@@ -84,7 +84,17 @@
         <h4>
             Your Learning Styles:
         </h4>
-        <pre id="results"></pre>
+        <pre id="results">...</pre>
+        <a data-role="button" data-inline="true" data-direction="reverse" 
+		    data-transition="flow" href="#page1" data-icon="arrow-l" data-iconpos="left" data-theme="b"
+			class="ui-btn-left restarter">
+            Restart
+        </a>
+        <a data-role="button" data-inline="true" data-direction="reverse" 
+		    data-transition="flow" href="#page1" data-icon="delete" data-iconpos="left" data-theme="b"
+			class="ui-btn-left deleter restarter">
+            Delete
+        </a>
 
     </div>
 </div>

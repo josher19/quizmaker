@@ -38,6 +38,7 @@
     function canSave() { return typeof JSON !== "undefined" && typeof localStorage !== "undefined" }
     function saveAnswers(id) { if (canSave()) localStorage.setItem('an#qz' + id, JSON.stringify(answers)); }
     function getSavedAnswers(id) { if (canSave()) return JSON.parse(localStorage.getItem('an#qz' + id)); return null; }
+    function deleteAnswers(id) { answers = {}; saveAnswers(id); }
 
     /* Questions */
 
@@ -49,7 +50,7 @@
         } 
         return questions; 
     }
-    var QUIZID = 1, DEFAULT_PREFER_VAL = 3, DEFAULT_LIKE_VAL = 2;
+    var QUIZID = 1, DEFAULT_PREFER_VAL = 1, DEFAULT_LIKE_VAL = 1;
 
     var questions = getQuestions(LearningStyles), nextq=-1, answers = getSavedAnswers(QUIZID) || {};
 
@@ -122,7 +123,9 @@
         nextTemplate();
         $('.nextBtn').tap(nextTemplate);
         $('.prevBtn').tap(prevTemplate);
-        $('.page > div').swiperight(nextTemplate).swipeleft(prevTemplate);        
+        $('.page > div').swiperight(nextTemplate).swipeleft(prevTemplate);
+        $('.deleter').tap(deleteAnswers);
+        $('.restarter').tap(resetQuestions);
     };
     jQuery(startup);
     jQuery(showFinalScore);
